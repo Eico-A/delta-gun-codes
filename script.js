@@ -1,104 +1,32 @@
-const GOOGLE_SHEET_CSV_URL = "这里粘贴我的 Google Sheets CSV 链接";
+const DATA_CSV_URL = "data.csv";
 
 const GUN_TYPES = ["全部", "突击步枪", "冲锋枪", "射手步枪", "狙击步枪", "轻机枪", "霰弹枪", "手枪"];
-const FAVORITES_KEY = "delta_firezone_gunsmith_favorites";
+const FAVORITES_KEY = "delta_firezone_gunsmith_favorites_v2";
 
 const fallbackData = [
   {
-    id: "001",
-    gun_type: "突击步枪",
-    weapon: "M4A1",
-    build_name: "低成本｜稳定过渡",
-    code: "M4A1-FIRE-LOW-001",
-    note: "适合刚开始囤物资时用，压枪轻松。",
-    tags: "低成本,稳定,新手",
-    sort: "10",
-    enabled: "是",
-    updated_at: "2026-05-17",
+    "枪械类型": "突击步枪",
+    "枪名": "M4A1",
+    "方案名": "低成本｜稳定过渡",
+    "改枪码": "这里放改枪码",
+    "备注": "便宜够用",
+    "是否显示": "是",
   },
   {
-    id: "002",
-    gun_type: "突击步枪",
-    weapon: "M4A1",
-    build_name: "中价位｜低后坐通用",
-    code: "M4A1-FIRE-MID-002",
-    note: "近中距离都能打，比较万金油。",
-    tags: "中价位,通用,低后坐",
-    sort: "20",
-    enabled: "是",
-    updated_at: "2026-05-17",
+    "枪械类型": "突击步枪",
+    "枪名": "M4A1",
+    "方案名": "满改｜极限稳压",
+    "改枪码": "这里放改枪码",
+    "备注": "贵但很稳",
+    "是否显示": "是",
   },
   {
-    id: "003",
-    gun_type: "突击步枪",
-    weapon: "AKM",
-    build_name: "低成本｜架点稳一点",
-    code: "AKM-FIRE-LOW-003",
-    note: "优先控制后坐，适合稳扎稳打。",
-    tags: "低成本,架点,稳定",
-    sort: "30",
-    enabled: "是",
-    updated_at: "2026-05-17",
-  },
-  {
-    id: "004",
-    gun_type: "突击步枪",
-    weapon: "AKM",
-    build_name: "满改｜极限稳压",
-    code: "AKM-FIRE-FULL-004",
-    note: "预算充足时用，手感更沉稳。",
-    tags: "满改,稳压,中远距离",
-    sort: "40",
-    enabled: "是",
-    updated_at: "2026-05-17",
-  },
-  {
-    id: "005",
-    gun_type: "冲锋枪",
-    weapon: "MP5",
-    build_name: "近战｜高机动跑图",
-    code: "MP5-FIRE-RUN-005",
-    note: "适合摸点和室内近战。",
-    tags: "近战,高机动,跑图",
-    sort: "50",
-    enabled: "是",
-    updated_at: "2026-05-17",
-  },
-  {
-    id: "006",
-    gun_type: "冲锋枪",
-    weapon: "MP5",
-    build_name: "低成本｜新手冲锋",
-    code: "MP5-FIRE-LOW-006",
-    note: "",
-    tags: "低成本,新手",
-    sort: "60",
-    enabled: "是",
-    updated_at: "2026-05-17",
-  },
-  {
-    id: "007",
-    gun_type: "射手步枪",
-    weapon: "SVD",
-    build_name: "架点｜中远距离稳定",
-    code: "SVD-FIRE-MID-007",
-    note: "适合队友推进时补枪。",
-    tags: "架点,中远距离,稳定",
-    sort: "70",
-    enabled: "是",
-    updated_at: "2026-05-17",
-  },
-  {
-    id: "008",
-    gun_type: "狙击步枪",
-    weapon: "M700",
-    build_name: "远点｜轻装偷人",
-    code: "M700-FIRE-SNIPE-008",
-    note: "轻量思路，方便转点。",
-    tags: "远点,轻装,狙击",
-    sort: "80",
-    enabled: "是",
-    updated_at: "2026-05-17",
+    "枪械类型": "冲锋枪",
+    "枪名": "MP5",
+    "方案名": "近战｜高机动跑图",
+    "改枪码": "这里放改枪码",
+    "备注": "贴脸舒服",
+    "是否显示": "是",
   },
 ];
 
@@ -197,73 +125,74 @@ function bindEvents() {
 
 async function loadData() {
   let rows = [];
-  let loadedFromOnline = false;
-  const url = GOOGLE_SHEET_CSV_URL.trim();
+  let loadedFromCsv = false;
 
-  if (url && !url.includes("这里粘贴")) {
-    try {
-      const response = await fetch(url, { cache: "no-store" });
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      const csvText = await response.text();
-      rows = parseCsv(csvText);
-      loadedFromOnline = true;
-    } catch (error) {
-      rows = fallbackData;
-      showNotice("在线数据加载失败，已使用本地备用数据");
-      console.warn("CSV load failed:", error);
+  try {
+    const response = await fetch(DATA_CSV_URL, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
-  } else {
+    const csvText = await response.text();
+    rows = parseCsv(csvText);
+    loadedFromCsv = true;
+  } catch (error) {
     rows = fallbackData;
-    showNotice("还没有填写 Google Sheets CSV 链接，当前使用本地备用数据");
+    showNotice("data.csv 加载失败，已使用本地备用数据。部署到 GitHub Pages 后会正常读取同目录 data.csv。");
+    console.warn("data.csv load failed:", error);
   }
 
-  allRows = normalizeRows(rows).filter((row) => isEnabled(row.enabled));
-  elements.dataStatus.textContent = loadedFromOnline ? "在线数据已加载" : "本地备用数据已加载";
+  allRows = normalizeRows(rows).filter((row) => isVisible(row.visible));
+  elements.dataStatus.textContent = loadedFromCsv ? "数据来源：data.csv" : "数据来源：本地备用数据";
+  elements.dataUpdated.textContent = `可显示方案：${allRows.length} 条`;
   updateMeta();
   render();
 }
 
 function normalizeRows(rows) {
-  return rows.map((row, index) => {
-    const normalized = {
-      id: String(row.id || `row-${index + 1}`).trim(),
-      gun_type: String(row.gun_type || "").trim(),
-      weapon: String(row.weapon || "").trim(),
-      build_name: String(row.build_name || "").trim(),
-      code: String(row.code || "").trim(),
-      note: String(row.note || "").trim(),
-      tags: String(row.tags || "").trim(),
-      sort: parseSort(row.sort),
-      enabled: String(row.enabled || "").trim(),
-      updated_at: String(row.updated_at || "").trim(),
-    };
-    normalized.searchText = [
-      normalized.weapon,
-      normalized.build_name,
-      normalized.note,
-      normalized.tags,
-    ].join(" ").toLowerCase();
-    normalized.tagList = splitTags(normalized.tags);
-    return normalized;
-  }).filter((row) => row.weapon && row.build_name && row.code);
+  return rows
+    .map((row, index) => {
+      const normalized = {
+        id: stableId(row, index),
+        gun_type: String(row["枪械类型"] || "").trim(),
+        weapon: String(row["枪名"] || "").trim(),
+        build_name: String(row["方案名"] || "").trim(),
+        code: String(row["改枪码"] || "").trim(),
+        note: String(row["备注"] || "").trim(),
+        visible: String(row["是否显示"] || "").trim(),
+        order: index,
+      };
+      normalized.searchText = [
+        normalized.gun_type,
+        normalized.weapon,
+        normalized.build_name,
+        normalized.note,
+      ].join(" ").toLowerCase();
+      return normalized;
+    })
+    .filter((row) => row.gun_type && row.weapon && row.build_name && row.code);
 }
 
-function parseSort(value) {
-  const parsed = Number.parseInt(String(value || "").trim(), 10);
-  return Number.isFinite(parsed) ? parsed : 9999;
+function stableId(row, index) {
+  const raw = [
+    row["枪械类型"] || "",
+    row["枪名"] || "",
+    row["方案名"] || "",
+    row["改枪码"] || "",
+    index,
+  ].join("|");
+  return simpleHash(raw);
 }
 
-function isEnabled(value) {
-  return ["是", "yes", "true", "1"].includes(String(value || "").trim().toLowerCase());
+function simpleHash(text) {
+  let hash = 0;
+  for (let i = 0; i < text.length; i += 1) {
+    hash = ((hash << 5) - hash + text.charCodeAt(i)) | 0;
+  }
+  return `row-${Math.abs(hash)}`;
 }
 
-function splitTags(tags) {
-  return String(tags || "")
-    .split(/[,，]/)
-    .map((tag) => tag.trim())
-    .filter(Boolean);
+function isVisible(value) {
+  return String(value || "").trim() === "是";
 }
 
 function getVisibleRows() {
@@ -271,7 +200,7 @@ function getVisibleRows() {
     .filter((row) => currentType === "全部" || row.gun_type === currentType)
     .filter((row) => !currentSearch || row.searchText.includes(currentSearch))
     .filter((row) => !favoritesOnly || favoriteIds.has(row.id))
-    .sort((a, b) => a.sort - b.sort || a.weapon.localeCompare(b.weapon, "zh-Hans-CN"));
+    .sort((a, b) => a.order - b.order);
 }
 
 function render() {
@@ -292,21 +221,21 @@ function groupByWeapon(rows) {
       map.set(row.weapon, {
         weapon: row.weapon,
         gun_type: row.gun_type,
-        minSort: row.sort,
+        minOrder: row.order,
         rows: [],
       });
     }
     const group = map.get(row.weapon);
     group.rows.push(row);
-    group.minSort = Math.min(group.minSort, row.sort);
+    group.minOrder = Math.min(group.minOrder, row.order);
   });
 
   return Array.from(map.values())
     .map((group) => ({
       ...group,
-      rows: group.rows.sort((a, b) => a.sort - b.sort || a.build_name.localeCompare(b.build_name, "zh-Hans-CN")),
+      rows: group.rows.sort((a, b) => a.order - b.order),
     }))
-    .sort((a, b) => a.minSort - b.minSort || a.weapon.localeCompare(b.weapon, "zh-Hans-CN"));
+    .sort((a, b) => a.minOrder - b.minOrder);
 }
 
 function createWeaponCard(group) {
@@ -340,9 +269,6 @@ function createBuildCard(row) {
 
   const favoriteText = favoriteIds.has(row.id) ? "★" : "☆";
   const noteHtml = row.note ? `<p class="note">${escapeHtml(row.note)}</p>` : "";
-  const tagsHtml = row.tagList.length
-    ? `<div class="tag-list">${row.tagList.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>`
-    : "";
 
   card.innerHTML = `
     <div class="build-main">
@@ -352,8 +278,6 @@ function createBuildCard(row) {
           <h3 class="build-name">${escapeHtml(row.build_name)}</h3>
         </div>
         ${noteHtml}
-        ${tagsHtml}
-        <div class="build-meta">更新时间：${escapeHtml(row.updated_at || "-")}</div>
       </div>
       <button class="copy-button" type="button" data-copy-id="${escapeHtml(row.id)}">复制改枪码</button>
     </div>
@@ -374,7 +298,7 @@ async function copyText(text, button, successText) {
       button.textContent = originalText;
       button.classList.remove("copied");
     }, 1200);
-  } catch (error) {
+  } catch {
     showManualCopy(text);
   }
 }
@@ -414,10 +338,7 @@ function showNotice(message) {
 }
 
 function updateMeta() {
-  const dates = allRows.map((row) => row.updated_at).filter(Boolean).sort();
-  const latest = dates.length ? dates[dates.length - 1] : "-";
   const loadedTime = new Date().toLocaleString("zh-CN", { hour12: false });
-  elements.dataUpdated.textContent = `数据更新时间：${latest}`;
   elements.lastLoaded.textContent = `最后加载时间：${loadedTime}`;
 }
 
