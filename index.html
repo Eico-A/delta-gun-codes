@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>三角洲行动｜烽火地带改枪码库</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand-sign">你九哥的神秘改枪码</div>
+      <h1>三角洲行动｜烽火地带改枪码库</h1>
+      <p class="subtitle">按枪械类型找枪，一键复制烽火地带改枪码</p>
+      <div class="meta-line">
+        <span id="dataStatus">正在加载数据...</span>
+        <span id="dataUpdated">数据更新时间：-</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="toolbar" aria-label="搜索和筛选">
+        <label class="search-box">
+          <span>搜索</span>
+          <input id="searchInput" type="search" placeholder="搜枪名、方案名、备注、标签">
+        </label>
+
+        <div class="type-filter" id="typeFilter" aria-label="枪械类型筛选"></div>
+
+        <div class="action-row">
+          <label class="favorite-switch">
+            <input id="favoritesOnly" type="checkbox">
+            <span>只看收藏</span>
+          </label>
+          <button id="copyVisibleBtn" class="secondary-button" type="button">复制全部可见方案名和改枪码</button>
+        </div>
+      </section>
+
+      <section id="notice" class="notice" hidden></section>
+      <section id="content" class="content" aria-live="polite"></section>
+      <section id="emptyState" class="empty-state" hidden>
+        没找到符合条件的方案。可以换个枪械类型，或者清空搜索词再试。
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>数据来自 Google Sheets</div>
+      <div>仅供个人整理和朋友分享</div>
+      <div id="lastLoaded">最后加载时间：-</div>
+    </footer>
+  </div>
+
+  <dialog id="manualCopyDialog" class="manual-dialog">
+    <form method="dialog">
+      <h2>复制失败，请手动复制</h2>
+      <textarea id="manualCopyText" readonly></textarea>
+      <button class="primary-button" value="close">关闭</button>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+:root {
+  color-scheme: dark;
+  --bg: #111419;
+  --panel: #1a1f27;
+  --panel-soft: #212833;
+  --line: #303947;
+  --text: #eef3f8;
+  --muted: #aeb8c5;
+  --soft: #7f8b99;
+  --accent: #ffcf4a;
+  --accent-2: #32d6a0;
+  --danger: #ff7d7d;
+  --button: #f2b93b;
+  --button-text: #19130a;
+  --shadow: 0 16px 46px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(50, 214, 160, 0.13), transparent 34rem),
+    linear-gradient(180deg, #12161d 0%, #0d1015 100%);
+  color: var(--text);
+  font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.page-shell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 28px 16px 36px;
+}
+
+.site-header {
+  text-align: center;
+  padding: 18px 0 20px;
+}
+
+.brand-sign {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-family: "ZCOOL KuaiLe", "Ma Shan Zheng", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: clamp(30px, 6vw, 54px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0;
+  color: #ffd45a;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.38), 0 0 22px rgba(255, 207, 74, 0.32);
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 40px);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.subtitle {
+  margin: 12px 0 14px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.meta-line {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: var(--soft);
+  font-size: 14px;
+}
+
+.toolbar {
+  background: rgba(26, 31, 39, 0.92);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.search-box {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.search-box input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 13px 14px;
+  color: var(--text);
+  background: #11161e;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: var(--accent-2);
+}
+
+.type-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.filter-button,
+.secondary-button,
+.copy-button,
+.favorite-button,
+.primary-button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 42px;
+}
+
+.filter-button {
+  padding: 10px 13px;
+  color: var(--muted);
+  background: #11161e;
+  border: 1px solid var(--line);
+}
+
+.filter-button.active {
+  color: #121212;
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  font-weight: 700;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.favorite-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  min-height: 42px;
+}
+
+.favorite-switch input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.secondary-button {
+  padding: 10px 14px;
+  color: var(--text);
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+}
+
+.notice {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #ffe7a0;
+  background: rgba(255, 207, 74, 0.1);
+  border: 1px solid rgba(255, 207, 74, 0.32);
+}
+
+.content {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.weapon-card {
+  background: rgba(26, 31, 39, 0.96);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.weapon-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px;
+  background: #151a22;
+  border-bottom: 1px solid var(--line);
+}
+
+.weapon-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.weapon-title h2 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.gun-type {
+  color: var(--accent-2);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.build-count {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.build-list {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.build-card {
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 13px;
+}
+
+.build-main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.build-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.favorite-button {
+  width: 42px;
+  min-width: 42px;
+  padding: 0;
+  color: var(--accent);
+  background: #141920;
+  border: 1px solid var(--line);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.build-name {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: #ffffff;
+}
+
+.note {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.tag {
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: #d8fff3;
+  background: rgba(50, 214, 160, 0.14);
+  border: 1px solid rgba(50, 214, 160, 0.25);
+  font-size: 13px;
+}
+
+.build-meta {
+  margin-top: 10px;
+  color: var(--soft);
+  font-size: 13px;
+}
+
+.copy-button {
+  min-width: 112px;
+  padding: 11px 15px;
+  color: var(--button-text);
+  background: var(--button);
+  font-weight: 800;
+}
+
+.copy-button.copied {
+  background: var(--accent-2);
+}
+
+.empty-state {
+  margin-top: 18px;
+  padding: 22px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 28px;
+  color: var(--soft);
+  font-size: 13px;
+}
+
+.manual-dialog {
+  width: min(620px, calc(100% - 28px));
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.manual-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.manual-dialog h2 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+.manual-dialog textarea {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  color: var(--text);
+  background: #10151c;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.primary-button {
+  margin-top: 12px;
+  padding: 10px 16px;
+  color: var(--button-text);
+  background: var(--button);
+  font-weight: 800;
+}
+
+@media (max-width: 680px) {
+  .page-shell {
+    padding: 20px 12px 28px;
+  }
+
+  .brand-sign {
+    font-size: 34px;
+  }
+
+  .site-header h1 {
+    font-size: 24px;
+  }
+
+  .filter-button {
+    flex: 1 1 auto;
+  }
+
+  .weapon-head,
+  .build-main {
+    grid-template-columns: 1fr;
+  }
+
+  .weapon-head {
+    align-items: flex-start;
+  }
+
+  .copy-button,
+  .secondary-button {
+    width: 100%;
+  }
+}
